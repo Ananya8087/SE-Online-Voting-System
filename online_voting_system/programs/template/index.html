@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nep Election | Login </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+    <div class="loginbox">
+        <!-- <img src="{{url_for('static', filename='user.png')}}align='middle' class='avatar'" /> -->
+        <img src="{{url_for('static', filename='user.png')}}" class='avatar' />
+        <label style="color:white">{{ msg }}</label>
+        <h1>Login Here</h1>
+        <form action="{{ url_for('Home') }}" method="post">
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter username">
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter password">
+            <input type="Submit" name="submit" value="Login">
+            <a href="#">Lost Your Password? </a><br>
+            <a href="{{url_for('Register')}}">Don't have an account?</a>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+{%extends 'base.html'%} {% set active_page = "home" %} {%block link%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style2.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> {%endblock%} {%block title%} Welcome {%endblock%} {%block content%}
+<div class="showcase">
+    <h1>Welcome to Nep Election</h1>
+    <h3>You can now vote your favorite candidate in your area.</h3>
+
+    <p>Time remaining to vote : {{time}}</p>
+</div>
+
+<table style="width:100%">
+    <tr>
+        <th>Candidate Name</th>
+        <th>Candidate Education</th>
+        <th>Candidate Party</th>
+        <th>Click to Vote</th>
+    </tr>
+    {%for data in datas%}
+    <tr>
+ >
+        <th scope="row">{{data['FirstName'] + ' ' + data['LastName']}}</th>
+        <td>{{data['DegreeLevel']}}</td>
+        <td>{{data['PartyID']}}</td>
+
+        <td>
+            <a href="{{url_for('Voted', username = username, CandidateID = data['CandidateID'])}}"><input type="Submit" name="" value="Vote"></a>
+        </td>
+    </tr>
+    {%endfor%}
+
+</table>
+{%endblock%}
+
+<!-- <div class="candidate">
+        <h1>Candidate Name</h1>
+        <h2>Candidate Education</h2>
+        <p>Summary of vision of the candidate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error voluptatem sed voluptatibus corporis omnis, nisi dignissimos. Sit expedita ex eaque assumenda quae maxime excepturi laboriosam, natus nam hic, delectus
+            voluptas.
+        </p>
+        <input type="Submit" name="" value="Submit your vote">
+    </div>
+    <div class="candidate">
+        <h1>Candidate Name</h1>
+        <h2>Candidate Education</h2>
+        <p>Summary of vision of the candidate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore laboriosam sapiente nulla neque atque odit qui! Suscipit delectus rerum accusamus quas at totam reprehenderit! Ipsa atque ab officia soluta possimus.</p>
+        <input type="Submit" name="" value="Submit your vote">
+    </div>
+    <div class="candidate">
+        <h1>Candidate Name</h1>
+        <h2>Candidate Education</h2>
+        <p>Summary of vision of the candidate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste similique praesentium inventore expedita amet eveniet ea omnis perspiciatis hic illum possimus quos, officia eum tenetur distinctio. Rem facilis
+            aut consectetur!</p>
+        <input type="Submit" name="" value="Submit your vote">
+    </div> -->

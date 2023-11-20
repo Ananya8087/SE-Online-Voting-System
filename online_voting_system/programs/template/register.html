@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nep Election | Register </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <div class="registerbox">
+        <img src="{{url_for('static', filename='user.png')}}" class="avatar">
+        <h1>Register</h1>
+        <label style="color:white">{{ msg }}</label>
+        <form action="{{ url_for('Register') }}" method="post">
+            <input type="text" name="fname" placeholder="Enter first name ">
+            <input type="text" name="mname" placeholder="Enter middle name (optional)">
+            <input type="text" name="lname" placeholder="Enter lname">
+            <div class="list">
+                <label for="genders">Gender</label>
+                <select name="gender" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="list">
+                <label for="birthday">Birthdate</label>
+                <input type="date" id="birthday" name="birthdate">
+            </div>
+            <input type="text" name="citizenship" placeholder="Citizenship No.">
+            <input type="text" name="province" placeholder="Province">
+            <input type="text" name="district" placeholder="District">
+            <input type="text" name="municipality" placeholder="Municipality">
+            <input type="text" name="ward" placeholder="Ward No.">
+
+            <input type="email" name="email" placeholder="Enter email">
+            <input type="password" name="password" placeholder="Enter password">
+            <input type="number" name="phone" placeholder="Enter phone no.">
+            <div class="list">
+                <label for="role">Register as</label>
+                <select name="role" id="role">
+                    <option value="voter">Voter</option>
+                    <option value="candidate">Candidate</option>
+                </select>
+            </div>
+            <input type="text" name="education" placeholder="Education (for candidate only)">
+            <input type="text" name="party" placeholder="Group Name (for candidate only)">
+            <input type="Submit" name="submit" value="Register">
+        </form>
+        <!-- <a href="#">xyzzz</a> -->
+    </div>
+</body>
+
+</html>
