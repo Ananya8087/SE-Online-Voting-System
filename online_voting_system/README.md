@@ -1,4 +1,4 @@
-# Online Voting System
+# Digital Voting System
 
 This is a project that at a very basic level implements how online voting can be performed. The project was done to understand the concepts of database management system and database design.
 
