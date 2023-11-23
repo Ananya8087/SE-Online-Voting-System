@@ -57,7 +57,96 @@ def Display():
 
 
 @app.route('/register', methods=['GET','POST'])
+def Register():
+    msg = ''
 
+    if request.method == 'POST':
+        if all(x in request.form for x in ['fname', 'lname', 'gender', 'birthdate', 'citizenship',
+         'province', 'district', 'municipality', 'ward', 'email', 'password', 'phone']):
+            fname = request.form['fname']
+            mname = request.form['mname']
+            lname = request.form['lname']
+            gender = request.form['gender']
+            birthdate = request.form['birthdate']
+            citizenship = request.form['citizenship']
+            province = request.form['province']
+            district = request.form['district']
+            municipality = request.form['municipality']
+            ward = request.form['ward']
+            email = request.form['email']
+            password = request.form['password']
+            phone = request.form['phone']
+            role = request.form['role']
+            education = request.form['education']
+            submit = request.form['submit']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM login where Email = %s', (email,))
+            result = cursor.fetchone()
+            if gender == 'Male':
+                gender = 0
+            else:
+                gender = 1
+
+            if result:
+                msg = 'Email already taken'
+            else:
+                # cursor.execute('SELECT * FROM voter_identity as c \
+                # join login as l on c.Email = l.Email where c.PhoneNo = %s', (phone,))
+                # result = cursor.fetchone()
+                if result:
+                    msg = 'PhoneNo already taken'
+                else:
+                    msg = "Registration Successful"
+                    cursor.execute('SELECT AddressID FROM address where District = %s and Municipality = %s and WardNo = %s and Province = %s',
+                    (district,municipality,ward,province,))
+                    result = cursor.fetchone()
+                    if not result:
+                        cursor.execute('Insert into address values(null,%s,%s,%s,%s)',
+                        (district,municipality,ward,province,))
+                        mysql.connection.commit()
+
+                        cursor.execute('SELECT AddressID FROM address where District = %s and Municipality = %s and WardNo = %s and Province = %s',
+                        (district,municipality,ward,province,))
+                        result = cursor.fetchone()
+                    
+                        
+                    
+                    address = result['AddressID']
+                    year = datetime.datetime.today().year
+                    age = int(year) - int(birthdate[:4])
+                    if role == "candidate":
+                        cursor.execute('SELECT EducationID FROM education where DegreeLevel = %s', (education,))
+                        result = cursor.fetchone()
+                        education = result['EducationID']
+                        party = 'ABC'
+                        cursor.execute('Insert into candidate_identity values(null,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                        (fname,mname,lname,birthdate,age,email,phone,gender,citizenship,education,address,party))
+                        mysql.connection.commit()
+
+                        username = fname + '@' + str(random.randrange(1000))
+                        usertype = 2
+                        cursor.execute('INSERT INTO login VALUES (NULL,%s, %s, %s, %s)', (username,password,usertype,email))
+                        mysql.connection.commit()
+                    else:
+                        cursor.execute('Insert into voter_identity values(null,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                        (fname,mname,lname,birthdate,age,email,phone,gender,citizenship,address))
+                        mysql.connection.commit()
+
+                        username = fname + '@' + str(random.randrange(1000))
+                        usertype = 1
+                        cursor.execute('INSERT INTO login VALUES (NULL,%s, %s, %s, %s)', (username,password,usertype,email))
+                        mysql.connection.commit()
+        else:
+            msg = 'Fill the missing values'
+        
+        if submit == "Register":
+            if usertype == 1:
+                return redirect(url_for('Voter', username=username))
+            else:
+                return redirect(url_for('Candidate', username=username))
+                
+
+    return render_template('register.html', msg = msg)
 
 
 @app.route('/voter/<username>',methods=['GET','POST'])
