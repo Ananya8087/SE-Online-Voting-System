@@ -1,0 +1,9 @@
+{%extends 'base.html'%} {%block link%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style2.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> {%endblock%} {%block title%} Nep Election | Successfully Voted {%endblock%} {%block content%}
+<div class="showcase">
+    <h1>Congratulations You have voted</h1>
+    <a href="{{url_for('Voter',username = username)}}">Change Your Vote</a>
+</div>
+
+<a href="{{url_for('Candidate', username = username)}}">abcdxyz</a> {%endblock%}

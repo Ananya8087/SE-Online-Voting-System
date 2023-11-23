@@ -1,0 +1,55 @@
+{%extends 'base.html'%} {% set active_page = "liveaction" %} {%block link%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style2.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> {%endblock%} {%block title%} Welcome {%endblock%} {%block content%}
+<div class="showcase">
+    <h1>See the live action here</h1>
+</div>
+
+<!-- <table style="width:100%">
+        <tr>
+            <th>Candidate Name</th>
+            <th>No of votes</th>
+        </tr>
+        <tr>
+            <td>Jill Smith</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Eve Jackson</td>
+            <td>94</td>
+        </tr>
+    </table> -->
+
+<table class="table table-striped table-dark">
+    <thead class="thead-dark">
+        <tr>
+            <th>Candidate Name</th>
+            <th>Degree Level</th>
+            <th>Party</th>
+            <th>No. of votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for data in datas%}
+        <tr>
+            
+            <th scope="row">{{data['FirstName']  + ' ' + data['LastName']}}</th>
+            <td>{{data['DegreeLevel']}}</td>
+            <td>{{data['PartyID']}}</td>
+            <td>
+                {{data['Nvotes']}}
+            </td>
+        </tr>
+        {%endfor%}
+        <!-- <tr>
+                <th scope="row">Eve Jackson</th>
+                <td>94</td>
+                <td>
+                    <button class="btn btn-outline btn-success">Vote</button>
+                    <button class="btn btn-outline btn-danger">Undo</button>
+                </td>
+            </tr> -->
+    </tbody>
+</table>
+{%endblock%}
