@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results</title>
+    <style>
+        body {
+            background-color: orange;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+            background-color: rgb(0, 255, 4);
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid black;
+            font-size: 1.5em;
+        }
+
+        .winner {
+            font-weight: bold;
+            color: green;
+        }
+
+        .second {
+            color: blue;
+        }
+
+        .third {
+            color: brown;
+        }
+    </style>
+</head>
+<body>
+    <h1>Election Results</h1>
+
+    <table>
+        <tr>
+            <th>Candidate Name</th>
+            <th>Total Votes</th>
+        </tr>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.FirstName }} {{ result.LastName }}</td>
+                <td>{{ result.VoteCount }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p class="winner">Winner: {{ results[0].FirstName }} {{ results[0].LastName }}</p>
+    <p class="second">Second Place: {{ results[1].FirstName }} {{ results[1].LastName }}</p>
+    <p class="third">Third Place: {{ results[2].FirstName }} {{ results[2].LastName }}</p>
+</body>
+</html>

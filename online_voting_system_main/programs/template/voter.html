@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% set active_page = "home" %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block content %}
+    <!-- Add a <div> or <span> to display the time remaining -->
+        <div class="showcase">
+            <h1>Welcome to PES Election</h1>
+            <h3>You can now vote your favorite candidate in your area.</h3>
+        
+        </div>
+        <div id="timeRemaining" style="font-size: 24px; text-align: center; padding: 20px; border: 2px solid #ccc; border-radius: 10px;">
+            Time remaining to vote: {{ time }}
+        </div>
+
+    <table style="width:100%">
+        <tr>
+            <th>Candidate Name</th>
+            <th>Candidate Education</th>
+            <th>Candidate Party</th>
+            <th>Click to Vote</th>
+        </tr>
+        {% for data in datas %}
+            <tr>
+                <th scope="row">{{ data['FirstName'] + ' ' + data['LastName'] }}</th>
+                <td>{{ data['DegreeLevel'] }}</td>
+                <td>{{ data['PartyID'] }}</td>
+                <td>
+                    <a href="{{ url_for('Voted', username=username, CandidateID=data['CandidateID']) }}"><input
+                            type="Submit" name="" value="Vote"></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Include jQuery for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- JavaScript code for dynamic updating -->
+    <script>
+        function updateTime() {
+            // Make an AJAX request to the server to get the updated time
+            $.ajax({
+                url: "{{ url_for('get_time_remaining') }}",
+                method: "GET",
+                success: function (response) {
+                    // Update the content of the 'timeRemaining' div with the new time format
+                    $("#timeRemaining").text("Time remaining to vote: " + response.time.days + " days, " +
+                        pad(response.time.hours) + ":" + pad(response.time.minutes) + ":" + pad(response.time.seconds));
+                }
+            });
+        }
+    
+        // Function to pad single digits with a leading zero
+        function pad(num) {
+            return num.toString().padStart(2, '0');
+        }
+    
+        // Call updateTime() initially to set the initial time
+        updateTime();
+    
+        // Call updateTime() every 1000 milliseconds (1 second) to update the time dynamically
+        setInterval(updateTime, 1000);
+    </script>
+
+
+{% endblock %}
